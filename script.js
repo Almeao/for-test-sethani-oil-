@@ -908,20 +908,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 function initSection4HorizontalScroll() {
+  console.log("Initializing Horizontal Scroll");
   const section = document.querySelector('.page3');
   const track = document.querySelector('.page3_contain');
-  if (!section || !track) return;
+  if (!section || !track) {
+    console.error("Section or track not found for horizontal scroll");
+    return;
+  }
 
-  // Total scroll distance equals track width minus viewport width
-  const totalScroll = track.scrollWidth - window.innerWidth;
+  // Use a function to calculate totalScroll so it's dynamic (re-evaluated on refresh)
+  const getTotalScroll = () => {
+    const scrollWidth = track.scrollWidth;
+    const innerWidth = window.innerWidth;
+    const total = scrollWidth - innerWidth;
+    console.log(`Recalculating Total Scroll: Track Width: ${scrollWidth}, Window Width: ${innerWidth}, Total: ${total}`);
+    return total;
+  };
 
   gsap.to(track, {
-    x: () => -totalScroll,
+    x: () => -getTotalScroll(), // Dynamic value
     ease: 'none',
     scrollTrigger: {
       trigger: section,
       start: 'top top',
-      end: () => `+=${totalScroll}`,
+      end: () => `+=${getTotalScroll()}`, // Dynamic end value
       scrub: true,
       pin: true,
       anticipatePin: 1,
@@ -935,6 +945,10 @@ initSection4HorizontalScroll();
 
 // Refresh on load to ensure correct dimensions after assets load
 window.addEventListener('load', () => {
+  console.log("Window loaded. Forcing Lenis resize and ScrollTrigger refresh.");
+  if (window.lenis) {
+    window.lenis.resize();
+  }
   ScrollTrigger.refresh();
 });
 
