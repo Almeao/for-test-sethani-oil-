@@ -936,11 +936,16 @@ initSection4HorizontalScroll();
 
 // Refresh on load to ensure correct dimensions after assets load
 window.addEventListener('load', () => {
-  console.log("Window loaded. Forcing Lenis resize and ScrollTrigger refresh.");
-  if (window.lenis) {
-    window.lenis.resize();
-  }
-  ScrollTrigger.refresh();
+  // Use a timeout to ensure layout is fully settled (fixes race condition)
+  setTimeout(() => {
+    // 1. Refresh ScrollTrigger first so it adds pin spacers and updates document height
+    ScrollTrigger.refresh();
+
+    // 2. Then resize Lenis so it picks up the new, taller document height
+    if (window.lenis) {
+      window.lenis.resize();
+    }
+  }, 500);
 });
 
 
