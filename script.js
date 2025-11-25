@@ -912,16 +912,16 @@ function initSection4HorizontalScroll() {
   const track = document.querySelector('.page3_contain');
   if (!section || !track) return;
 
-  // Use a function to calculate totalScroll so it's dynamic (re-evaluated on refresh)
-  const getTotalScroll = () => track.scrollWidth - window.innerWidth;
+  // Total scroll distance equals track width minus viewport width
+  const totalScroll = track.scrollWidth - window.innerWidth;
 
   gsap.to(track, {
-    x: () => -getTotalScroll(), // Dynamic value
+    x: () => -totalScroll,
     ease: 'none',
     scrollTrigger: {
       trigger: section,
       start: 'top top',
-      end: () => `+=${getTotalScroll()}`, // Dynamic end value
+      end: () => `+=${totalScroll}`,
       scrub: true,
       pin: true,
       anticipatePin: 1,
@@ -930,9 +930,11 @@ function initSection4HorizontalScroll() {
   });
 }
 
-// Initialize on load to ensure correct dimensions
+// Initialize immediately to ensure content exists
+initSection4HorizontalScroll();
+
+// Refresh on load to ensure correct dimensions after assets load
 window.addEventListener('load', () => {
-  initSection4HorizontalScroll();
   ScrollTrigger.refresh();
 });
 
