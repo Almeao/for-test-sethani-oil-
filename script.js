@@ -912,8 +912,9 @@ function initSection4HorizontalScroll() {
   const track = document.querySelector('.page3_contain');
   if (!section || !track) return;
 
-  // Use a function to calculate totalScroll so it's dynamic (re-evaluated on refresh)
-  const getTotalScroll = () => track.scrollWidth - window.innerWidth;
+  // Use a math-based calculation (400vw total width - 100vw viewport = 300vw scroll)
+  // This avoids issues where the browser reports the wrong scrollWidth before layout is complete.
+  const getTotalScroll = () => window.innerWidth * 3;
 
   gsap.to(track, {
     x: () => -getTotalScroll(), // Dynamic value
