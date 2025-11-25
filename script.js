@@ -945,7 +945,7 @@ window.addEventListener('load', () => {
     if (window.lenis) {
       window.lenis.resize();
     }
-  }, 500);
+  }, 100);
 });
 
 
