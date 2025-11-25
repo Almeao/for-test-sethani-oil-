@@ -908,22 +908,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 function initSection4HorizontalScroll() {
-  console.log("Initializing Horizontal Scroll");
   const section = document.querySelector('.page3');
   const track = document.querySelector('.page3_contain');
-  if (!section || !track) {
-    console.error("Section or track not found for horizontal scroll");
-    return;
-  }
+  if (!section || !track) return;
 
   // Use a function to calculate totalScroll so it's dynamic (re-evaluated on refresh)
-  const getTotalScroll = () => {
-    const scrollWidth = track.scrollWidth;
-    const innerWidth = window.innerWidth;
-    const total = scrollWidth - innerWidth;
-    console.log(`Recalculating Total Scroll: Track Width: ${scrollWidth}, Window Width: ${innerWidth}, Total: ${total}`);
-    return total;
-  };
+  const getTotalScroll = () => track.scrollWidth - window.innerWidth;
 
   gsap.to(track, {
     x: () => -getTotalScroll(), // Dynamic value
