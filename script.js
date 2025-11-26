@@ -31,10 +31,10 @@ var lodder = gsap.timeline();
 
 
 // Wait for full page & all assets (images, video) to load, then start loader timeline animation
-// Start loader animation sooner (on DOMContentLoaded) to improve perceived speed
-document.addEventListener('DOMContentLoaded', function () {
-  // Small buffer to ensure video frame is ready, but much faster than waiting for all images
-  setTimeout(() => lodder.play(), 100);
+// Wait for full page & all assets (images, video) to load, then start loader timeline animation
+window.addEventListener('load', function () {
+  // At this point, all HTML, CSS, JS & media assets are loaded
+  lodder.play();
 });
 
 
