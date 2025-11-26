@@ -1732,8 +1732,9 @@ body::-webkit-scrollbar {
 }
 
 .footer-credits {
-    width: 95%;
+    width: 100%;
     display: grid;
+    /* background-color: #8a2626; */
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 12px;
